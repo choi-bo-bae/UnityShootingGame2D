@@ -21,6 +21,10 @@ public class BossFire : MonoBehaviour
 
     public GameObject bulletFactory;    //총알 프리팹
     public GameObject target;           //플레이어 타겟
+
+    public GameObject bossFirePos;
+
+
     public float fireTime = 1.0f;
     float curTime = 0.0f;
 
@@ -68,9 +72,9 @@ public class BossFire : MonoBehaviour
                     //총알 공장에서 총알 생성
                     GameObject bullet = Instantiate(bulletFactory);
                     //총알 생성 위치
-                    bullet.transform.position = transform.position;
+                    bullet.transform.position = bossFirePos.transform.position;
                     //플레이어가 있는 방향 구하기(벡터의 뺄셈)
-                    Vector3 dir = target.transform.position - transform.position;
+                    Vector3 dir = target.transform.position - bossFirePos.transform.position;
                     dir.Normalize();
                     //총구의 방향도 맞춰 준다(이게 중요함)
                     bullet.transform.up = dir;
@@ -99,7 +103,7 @@ public class BossFire : MonoBehaviour
                     //총알 공장에서 총알 생성
                     GameObject bullet = Instantiate(bulletFactory);
                     //총알 생성 위치
-                    bullet.transform.position = transform.position;
+                    bullet.transform.position = bossFirePos.transform.position;
                     //360도 방향으로 발사
                     float angle = 360.0f / bulletMax;
                     //총구의 방향도 맞춰 준다(이게 중요함)

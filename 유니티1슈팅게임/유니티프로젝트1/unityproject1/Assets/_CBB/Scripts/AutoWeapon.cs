@@ -17,9 +17,6 @@ public class AutoWeapon : MonoBehaviour
     void Update()
     {
         transform.position = target.transform.position;
-
         
-       
-
     }
 }

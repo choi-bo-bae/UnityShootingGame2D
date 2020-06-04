@@ -20,7 +20,7 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         //에너미 생성
-        SpawnEnemy();
+        //SpawnEnemy();
     }
 
     private void SpawnEnemy()

@@ -12,7 +12,7 @@ public class ScoreManager : MonoBehaviour
 
     public Text ScoreTxt;               //일반 UI텍스트          
     public Text HighScoreTxt;           //일반 UI텍스트
-    public TextMeshProUGUI textTxt;     //텍스트메시 프로
+   // public TextMeshProUGUI textTxt;     //텍스트메시 프로
 
 
     int score = 0;
@@ -50,6 +50,6 @@ public class ScoreManager : MonoBehaviour
         ScoreTxt.text = "Score :" + score;
 
         //텍스트 메시 프로
-        textTxt.text = "test???????";
+        //textTxt.text = "test???????";
     }
 }

@@ -22,17 +22,21 @@ public class Tail : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        FollowTarget();
+        if (target != null)
+        {
+            FollowTarget();
+        }
     }
 
     private void FollowTarget()
     {
         //타겟 방향 구하기 -> 벡터의 뺄셈
         //방향 = 타겟 - 꼬리
+        
+            Vector3 dir = target.transform.position - transform.position;
+            dir.Normalize();
 
-        Vector3 dir = target.transform.position - transform.position;
-        dir.Normalize();
-
-        transform.Translate(dir * speed * Time.deltaTime);
+            transform.Translate(dir * speed * Time.deltaTime);
+       
     }
 }

@@ -7,8 +7,10 @@ public class PlayerMove : MonoBehaviour
 {
     //플레이어 이동
     public float speed = 5.0f;//플레이어의 이동 속도
-
     public Vector2 margin;  //뷰 포트좌표는 0.0f ~ 1.0f 사이
+
+    //조이스틱 사용하기
+    public VariableJoystick joystick;//조이스틱
 
     // Start is called before the first frame update
     void Start()
@@ -25,19 +27,26 @@ public class PlayerMove : MonoBehaviour
     //플레이어 이동 함수
     private void Move()
     {
-       
-            float h = Input.GetAxis("Horizontal");
-            float v = Input.GetAxis("Vertical");
+
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+
+        //조이스틱 사용하기
+        //키보드가 안눌려 있을 때 => 조이스틱 사용하면 됨
+        if(h == 0 && v == 0)
+        {
+            h = joystick.Horizontal;
+            v = joystick.Vertical;
+        }
 
 
-            transform.Translate(h * speed * Time.deltaTime, v * speed * Time.deltaTime, 0.0f);
-
+        transform.Translate(h * speed * Time.deltaTime, v * speed * Time.deltaTime, 0.0f);
+        
         //Vector3 dir = Vector3.right * h + Vector3.up * v;
 
         //transform.Translate(dir * speed * Time.deltaTime);
 
         //위치 = 현재 위치 + (방향 * 시간)
-
         //Vector3 dir = new Vector3(h, v, 0);
         //transform.position += dir * speed * Time.deltaTime;
 

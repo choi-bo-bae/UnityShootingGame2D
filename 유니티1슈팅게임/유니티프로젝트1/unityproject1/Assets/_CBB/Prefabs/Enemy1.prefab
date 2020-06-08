@@ -60,6 +60,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+  curScore: 0
+  highScore: 0
+  score: {fileID: 0}
+  h_Score: {fileID: 0}
 --- !u!54 &7147703580118536378
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -83,6 +87,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7147703580118536376}
     m_Modifications:
+    - target: {fileID: 1637917924625008, guid: 6647bc14b7f253f4aa7ed042ccbd8304, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1946970332979032, guid: 6647bc14b7f253f4aa7ed042ccbd8304, type: 3}
       propertyPath: m_Name
       value: EnemyBody

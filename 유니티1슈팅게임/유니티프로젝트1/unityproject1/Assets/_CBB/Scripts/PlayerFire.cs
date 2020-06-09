@@ -19,6 +19,11 @@ public class PlayerFire : MonoBehaviour
     public float maxTime = 2.0f;
     private float curTime = 0.0f;
 
+    //사운드 재생
+    AudioSource audio;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,13 +32,14 @@ public class PlayerFire : MonoBehaviour
         //중요!
         //게임 오브젝트는 활성화 비활성화 => SetActive() 함수 사용
         //컴포넌트는 enabled 속성 사용
+        audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
     void Update()
     {
-          //Fire();
-        //FireRay();
+        //Fire();
+        FireRay();
     }
     
 
@@ -62,6 +68,9 @@ public class PlayerFire : MonoBehaviour
         //마우스 왼쪽 버튼 혹은 왼쪽 컨트롤 키
         if (Input.GetButtonDown("Fire1"))
         {
+            //레이저 사운드 재생
+            audio.Play();
+
             //라인랜더러 컴포넌트 활성화
             lr.enabled = true;
             //라인 시작점, 끝점 필요
@@ -132,6 +141,9 @@ public class PlayerFire : MonoBehaviour
         GameObject bullet = Instantiate(bulletFactory);
         //총알 오브젝트 위치 지정
         bullet.transform.position = firePoint.transform.position;
+        SceneMgr.Instance.LoadScene("StartScene");
     }
+
+
 
 }

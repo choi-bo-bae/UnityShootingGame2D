@@ -60,10 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  curScore: 0
-  highScore: 0
-  score: {fileID: 0}
-  h_Score: {fileID: 0}
+  fxFactory: {fileID: 100006, guid: f86c28e1f16f48b44949964851fd00da, type: 3}
 --- !u!54 &7147703580118536378
 Rigidbody:
   m_ObjectHideFlags: 0

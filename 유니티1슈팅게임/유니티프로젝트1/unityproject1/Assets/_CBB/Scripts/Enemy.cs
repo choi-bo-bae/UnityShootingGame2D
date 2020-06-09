@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
 
     public float speed = 10.0f;
 
+    public GameObject fxFactory;
+
     //public int curScore = 0;
     //public int highScore = 0;
     //
@@ -39,6 +41,9 @@ public class Enemy : MonoBehaviour
         //Destroy(gameObject, 1.0f);//1초 후에 없앰
         Destroy(collision.gameObject);
 
+        //이펙트 보여주기
+        showEffect();
+
         //점수 추가
         ScoreManager.Instance.AddScore();
 
@@ -47,24 +52,10 @@ public class Enemy : MonoBehaviour
         //score.text = "Score : " + curScore;
         //PlayerPrefs.SetInt("SCORE", curScore);
     }
-    
 
-
-    //public void saveScore()
-    //{
-    //    if (curScore > highScore)
-    //    {
-    //        highScore = curScore;
-    //        //PlayerPrefs.SetInt("HIGHSCORE", highScore);
-    //        //h_Score.text = "HighScore : " + highScore.ToString("00");
-    //    }
-    //}
-    
-
-    //public void loadScore()
-    //{
-    //   // PlayerPrefs.GetInt("HIGHSCORE", highScore);
-    //   // h_Score.text = "HighScore : " + highScore.ToString("00");
-    //}
-
+    void showEffect()
+    {
+        GameObject fx = Instantiate(fxFactory);
+        fx.transform.position = transform.position;
+    }
 }

@@ -41,6 +41,7 @@ public class Enemy : MonoBehaviour
         //Destroy(gameObject, 1.0f);//1초 후에 없앰
         Destroy(collision.gameObject);
 
+       
         //이펙트 보여주기
         showEffect();
 
@@ -57,5 +58,6 @@ public class Enemy : MonoBehaviour
     {
         GameObject fx = Instantiate(fxFactory);
         fx.transform.position = transform.position;
+       
     }
 }

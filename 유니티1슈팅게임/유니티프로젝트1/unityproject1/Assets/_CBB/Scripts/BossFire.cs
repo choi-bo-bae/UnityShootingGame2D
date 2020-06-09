@@ -30,13 +30,27 @@ public class BossFire : MonoBehaviour
 
     public float fireTime1 = 1.5f;      //1.5초에 한번씩 발사
     float curTime1 = 0.0f;
+
     int bulletMax = 10;
+
+    public Queue<GameObject> BossBulletPool;
 
 
     // Start is called before the first frame update
     void Start()
     {
-       
+        InitObjectPooling();
+    }
+
+    private void InitObjectPooling()
+    {
+        BossBulletPool = new Queue<GameObject>();
+        for(int i = 0; i < bulletMax; i++)
+        {
+            GameObject bossBullet = Instantiate(bulletFactory);
+            bossBullet.SetActive(false);
+            BossBulletPool.Enqueue(bossBullet);
+        }
     }
 
     // Update is called once per frame
@@ -68,21 +82,33 @@ public class BossFire : MonoBehaviour
             if (curTime > fireTime)
             {
               
-
-                    //총알 공장에서 총알 생성
-                    GameObject bullet = Instantiate(bulletFactory);
-                    //총알 생성 위치
-                    bullet.transform.position = bossFirePos.transform.position;
+                if(BossBulletPool.Count > 0)
+                {
+                    GameObject bossBullet = BossBulletPool.Dequeue();
+                    bossBullet.SetActive(true);
+                    bossBullet.transform.position = bossFirePos.transform.position;
                     //플레이어가 있는 방향 구하기(벡터의 뺄셈)
                     Vector3 dir = target.transform.position - bossFirePos.transform.position;
                     dir.Normalize();
                     //총구의 방향도 맞춰 준다(이게 중요함)
-                    bullet.transform.up = dir;
+                    bossBullet.transform.up = dir;
+                    //타이머 초기화
+                    curTime = 0.0f;
+                }
+                else
+                {
+                    GameObject bossBullet = Instantiate(bulletFactory);
+                    bossBullet.SetActive(false);
+                    BossBulletPool.Enqueue(bossBullet);
+                    //타이머 초기화
+                    curTime = 0.0f;
+                }
                 
-
-                //타이머 초기화
-                curTime = 0.0f;
-
+                    //총알 공장에서 총알 생성
+                    //GameObject bullet = Instantiate(bulletFactory);
+                    //총알 생성 위치
+                   // bullet.transform.position = bossFirePos.transform.position;
+                   
             }
         }
     }

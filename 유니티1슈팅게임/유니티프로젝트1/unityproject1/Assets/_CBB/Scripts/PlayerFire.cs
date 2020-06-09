@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerFire : MonoBehaviour
 {
-    public GameObject bulletFactory; //프리팹은 주로 팩토리(공장에서 찍어내듯이) 라는 이름을 사용
+    public GameObject playerBulletFactory; //프리팹은 주로 팩토리(공장에서 찍어내듯이) 라는 이름을 사용
     public GameObject firePoint;
 
     public RaycastHit collObj;
@@ -28,8 +28,10 @@ public class PlayerFire : MonoBehaviour
     int fireIndex = 0;
     //1. 배열
     // GameObject[] bulletPool;
+
     //2. 리스트
     //public List<GameObject> bulletPool;
+    
     //3. 큐
     public Queue<GameObject> bulletPool;
 
@@ -74,7 +76,7 @@ public class PlayerFire : MonoBehaviour
         bulletPool = new Queue<GameObject>();
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject bullet = Instantiate(bulletFactory);
+            GameObject bullet = Instantiate(playerBulletFactory);
             bullet.SetActive(false);
             bulletPool.Enqueue(bullet);
         }
@@ -84,88 +86,99 @@ public class PlayerFire : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Fire();
+        //Fire();
         //FireRay();
 
+
+        //일정 시간이 지나면 레이저 보여주는 기능 비활성화
+        if (lr.enabled == true)
+        {
+            curTime += Time.deltaTime;
+            if (curTime > maxTime)
+            {
+                lr.enabled = false;
+                curTime = 0.0f;
+            }
+        }
     }
     
 
     //총알 발사
-    public void Fire()
-    {
+    //public void Fire()
+    //{
 
-        //마우스 왼쪽 버튼 혹은 왼쪽 컨트롤 키
-        if(Input.GetButtonDown("Fire1"))
-        {
-            //1. 배열 오브젝트 풀링으로 총알 발사
-            //bulletPool[fireIndex].SetActive(true);
-            //bulletPool[fireIndex].transform.position = firePoint.transform.position;
-            //bulletPool[fireIndex].transform.up = firePoint.transform.up;
-            //fireIndex++;
-            //
-            //if (fireIndex >= poolSize) fireIndex = 0;
+    //    //마우스 왼쪽 버튼 혹은 왼쪽 컨트롤 키
+    //    if(Input.GetButtonDown("Fire1"))
+    //    {
+    //        //1. 배열 오브젝트 풀링으로 총알 발사
+    //        //bulletPool[fireIndex].SetActive(true);
+    //        //bulletPool[fireIndex].transform.position = firePoint.transform.position;
+    //        //bulletPool[fireIndex].transform.up = firePoint.transform.up;
+    //        //fireIndex++;
+    //        //
+    //        //if (fireIndex >= poolSize) fireIndex = 0;
 
-            //2. 리스트 오브젝트 풀링으로 총알 발사
-            // bulletPool[fireIndex].SetActive(true);
-            // bulletPool[fireIndex].transform.position = firePoint.transform.position;
-            // bulletPool[fireIndex].transform.up = firePoint.transform.up;
-            // fireIndex++;
+    //        //2. 리스트 오브젝트 풀링으로 총알 발사
+    //        // bulletPool[fireIndex].SetActive(true);
+    //        // bulletPool[fireIndex].transform.position = firePoint.transform.position;
+    //        // bulletPool[fireIndex].transform.up = firePoint.transform.up;
+    //        // fireIndex++;
             
-            // if (fireIndex >= poolSize) fireIndex = 0;
+    //        // if (fireIndex >= poolSize) fireIndex = 0;
 
-            //3. 리스트 오브젝트 풀링으로 총알 발사(진짜 오브젝트 풀링)
-           // if(bulletPool.Count > 0)
-           // {
-           //     GameObject bullet = bulletPool[0];
-           //     bullet.SetActive(true);
-           //     bullet.transform.position = firePoint.transform.position;
-           //     bullet.transform.up = firePoint.transform.up;
-           //     //오브젝트 풀에서 빼준다
-           //     bulletPool.Remove(bullet);
-           // }
-           // else//총알이 없음 -> 풀 크기를 늘려서 총알을 만들어야 한다.
-           // {
-           //     GameObject bullet = Instantiate(bulletFactory);
-           //     bullet.SetActive(false);
-           //     bulletPool.Add(bullet);
-           // }
+    //        //3. 리스트 오브젝트 풀링으로 총알 발사(진짜 오브젝트 풀링)
+    //       // if(bulletPool.Count > 0)
+    //       // {
+    //       //     GameObject bullet = bulletPool[0];
+    //       //     bullet.SetActive(true);
+    //       //     bullet.transform.position = firePoint.transform.position;
+    //       //     bullet.transform.up = firePoint.transform.up;
+    //       //     //오브젝트 풀에서 빼준다
+    //       //     bulletPool.Remove(bullet);
+    //       // }
+    //       // else//총알이 없음 -> 풀 크기를 늘려서 총알을 만들어야 한다.
+    //       // {
+    //       //     GameObject bullet = Instantiate(bulletFactory);
+    //       //     bullet.SetActive(false);
+    //       //     bulletPool.Add(bullet);
+    //       // }
 
-             //4. 큐오브젝트 풀링 사용하기
-            if(bulletPool.Count > 0)
-            {
-                GameObject bullet = bulletPool.Dequeue();
-                bullet.SetActive(true);
-                bullet.transform.position = firePoint.transform.position;
-                bullet.transform.up = firePoint.transform.up;
-            }
-            else
-            {
-                //총알 오브젝트 생성
-                GameObject bullet = Instantiate(bulletFactory);
-                bullet.SetActive(false);
-                //생성된 총알 오브젝트를 풀에 담는다
-                bulletPool.Enqueue(bullet);
-            }
+    //         //4. 큐오브젝트 풀링 사용하기
+    //        if(bulletPool.Count > 0)
+    //        {
+    //            GameObject bullet = bulletPool.Dequeue();
+    //            bullet.SetActive(true);
+    //            bullet.transform.position = firePoint.transform.position;
+    //            bullet.transform.up = firePoint.transform.up;
+    //        }
+    //        else
+    //        {
+    //            //총알 오브젝트 생성
+    //            GameObject bullet = Instantiate(bulletFactory);
+    //            bullet.SetActive(false);
+    //            //생성된 총알 오브젝트를 풀에 담는다
+    //            bulletPool.Enqueue(bullet);
+    //        }
 
 
-            //총알공장(총알프리팹)에서 총알을 무한으로 뽑아낼 수 있다
-            //Instantiate() 함수로 프리팹 파일을 게임오브젝트로 만든다
+    //        //총알공장(총알프리팹)에서 총알을 무한으로 뽑아낼 수 있다
+    //        //Instantiate() 함수로 프리팹 파일을 게임오브젝트로 만든다
 
-            //총알 게임오브젝트 생성
-            //GameObject bullet = Instantiate(bulletFactory);
-            //총알 오브젝트 위치 지정
-            // bullet.transform.position = firePoint.transform.position;
-        }
-    }
+    //        //총알 게임오브젝트 생성
+    //        //GameObject bullet = Instantiate(bulletFactory);
+    //        //총알 오브젝트 위치 지정
+    //        // bullet.transform.position = firePoint.transform.position;
+    //    }
+    //}
 
 
     //레이저 발사
-    public void FireRay()
+    public void OnRayFireButtonClick()
     {
-       
+        
         //마우스 왼쪽 버튼 혹은 왼쪽 컨트롤 키
-        if (Input.GetButtonDown("Fire1"))
-        {
+        //if (Input.GetButtonDown("Fire1"))
+        //{
             //레이저 사운드 재생
             audio.Play();
 
@@ -208,18 +221,9 @@ public class PlayerFire : MonoBehaviour
                 lr.SetPosition(1, transform.position + Vector3.up * 10);
             }
             
-        }
+        //}
 
-        //일정 시간이 지나면 레이저 보여주는 기능 비활성화
-        if (lr.enabled == true)
-        {
-            curTime += Time.deltaTime;
-            if (curTime > maxTime)
-            {
-                lr.enabled = false;
-                curTime = 0.0f;
-            }
-        }
+        
         
     }
 
@@ -235,11 +239,30 @@ public class PlayerFire : MonoBehaviour
     //파이어 버튼 클릭
     public void OnFireButtonClick()
     {
-        //총알 게임오브젝트 생성
-        GameObject bullet = Instantiate(bulletFactory);
-        //총알 오브젝트 위치 지정
-        bullet.transform.position = firePoint.transform.position;
-        //SceneMgr.Instance.LoadScene("StartScene");
+
+        if (bulletPool.Count > 0)
+        {
+            GameObject bullet = bulletPool.Dequeue();
+            bullet.SetActive(true);
+            bullet.transform.position = firePoint.transform.position;
+            bullet.transform.up = firePoint.transform.up;
+        }
+        else
+        {
+            //총알 오브젝트 생성
+            GameObject bullet = Instantiate(playerBulletFactory);
+            bullet.SetActive(false);
+            //생성된 총알 오브젝트를 풀에 담는다
+            bulletPool.Enqueue(bullet);
+        }
+
+        ////총알 게임오브젝트 생성
+        //GameObject bullet = Instantiate(bulletFactory);
+        ////총알 오브젝트 위치 지정
+        //bullet.transform.position = firePoint.transform.position;
+        ////SceneMgr.Instance.LoadScene("StartScene");
+
+
     }
 
 

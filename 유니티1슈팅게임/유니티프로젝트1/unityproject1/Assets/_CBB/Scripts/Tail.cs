@@ -10,7 +10,7 @@ public class Tail : MonoBehaviour
     //플레이어의 위치를 알아야 한다.
     public GameObject target;   //플레이어어 오브젝트
 
-    public float speed = 3.0f;
+    public float speed = 0.5f;
     
 
     // Update is called once per frame
@@ -27,10 +27,10 @@ public class Tail : MonoBehaviour
         //타겟 방향 구하기 -> 벡터의 뺄셈
         //방향 = 타겟 - 꼬리
         
-            Vector3 dir = target.transform.position - transform.position;
-            dir.Normalize();
+          Vector3 dir = target.transform.position - transform.position;
+          dir.Normalize();
 
-            transform.Translate(dir * speed * Time.deltaTime);
+          transform.Translate(dir * speed * Time.deltaTime);
        
     }
 }

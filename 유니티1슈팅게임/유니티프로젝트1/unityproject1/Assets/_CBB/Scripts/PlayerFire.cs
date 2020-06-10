@@ -13,7 +13,7 @@ public class PlayerFire : MonoBehaviour
 
     //레이저를 발사하기 위해 라인랜더러가 필요
     //선은 최소 2개 이상의 점 필요
-    LineRenderer lr;//라인랜더러 컴포넌트
+    public LineRenderer lr;//라인랜더러 컴포넌트
     
     //일정 시간동안만 레이저 보여주기
     public float maxTime = 2.0f;
@@ -222,9 +222,6 @@ public class PlayerFire : MonoBehaviour
             }
             
         //}
-
-        
-        
     }
 
     //private void OnTriggerEnter(Collider other)
@@ -261,10 +258,8 @@ public class PlayerFire : MonoBehaviour
         ////총알 오브젝트 위치 지정
         //bullet.transform.position = firePoint.transform.position;
         ////SceneMgr.Instance.LoadScene("StartScene");
-
-
+        
     }
-
-
+    
 
 }

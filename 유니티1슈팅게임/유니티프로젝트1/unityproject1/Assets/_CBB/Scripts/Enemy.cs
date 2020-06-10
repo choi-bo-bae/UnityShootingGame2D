@@ -9,55 +9,80 @@ public class Enemy : MonoBehaviour
     //충돌처리(애너미랑 플레이어, 애너미랑 플레이어의 총알)
 
     public float speed = 10.0f;
+    
+    private float curTime = 0.0f;
+    private float maxTime = 2.0f;
 
-    public GameObject fxFactory;
+    public GameObject bulletFactory;
+    public GameObject target;
 
-    //public int curScore = 0;
-    //public int highScore = 0;
-    //
-    //public Text score;
-    //public Text h_Score;
+    public Queue<GameObject> EnemyBulletPool;
 
+    int bulletMax = 5;
 
     private void Start()
     {
-        //score = GetComponent<Text>();
-        //h_Score = GetComponent<Text>();
+        InitBulletPooling();
     }
+
+    private void InitBulletPooling()
+    {
+        EnemyBulletPool = new Queue<GameObject>();
+
+        for (int i = 0; i < bulletMax; i++)
+        {
+            GameObject enemyBullet = Instantiate(bulletFactory);
+            enemyBullet.SetActive(false);
+            EnemyBulletPool.Enqueue(enemyBullet);
+        }
+    }
+
 
     // Update is called once per frame
     void Update()
     {
         //아래로 이동해라
         transform.Translate(Vector3.down * speed * Time.deltaTime);
+
+        enemyFire();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void enemyFire()
     {
+        if (target != null)
+        {
+            curTime += Time.deltaTime;
 
-        //자기 자신도 없애고
-        //충돌된 오브젝트도 없앤다
-        Destroy(gameObject);
-        //Destroy(gameObject, 1.0f);//1초 후에 없앰
-        Destroy(collision.gameObject);
+            if (curTime > maxTime)
+            {
+                if (EnemyBulletPool.Count > 0)
+                {
+                    GameObject enemyBullet = EnemyBulletPool.Dequeue();
+                    enemyBullet.SetActive(true);
+                    enemyBullet.transform.position = this.transform.position;
+                    Vector3 dir = target.transform.position - this.transform.position;
+                    dir.Normalize();
+                    enemyBullet.transform.up = dir;
 
-       
-        //이펙트 보여주기
-        showEffect();
+                    curTime = 0.0f;
+                }
+                else
+                {
+                    GameObject enemyBullet = Instantiate(bulletFactory);
+                    enemyBullet.SetActive(false);
+                    EnemyBulletPool.Enqueue(enemyBullet);
 
-        //점수 추가
-        ScoreManager.Instance.AddScore();
-
-        //적 캐릭터 사망 시 스코어 증가 후 저장
-        //curScore++;
-        //score.text = "Score : " + curScore;
-        //PlayerPrefs.SetInt("SCORE", curScore);
+                    curTime = 0.0f;
+                }
+            }
+        }
     }
 
-    void showEffect()
-    {
-        GameObject fx = Instantiate(fxFactory);
-        fx.transform.position = transform.position;
-       
-    }
+   
+
+
+
+
+  
+
 }

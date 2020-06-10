@@ -25,9 +25,9 @@ public class DestroyZone : MonoBehaviour
        //     pf.bulletPool.Add(other.gameObject);
        // }
 
-
+        //플레이어의 총알이 충돌 된 경우
         //충돌된 오브젝트가 총알이라면 총알 풀에 추가한다
-        if(other.gameObject.name.Contains("Bullet"))
+        if(other.gameObject.layer == LayerMask.NameToLayer("Bullet"))
         {
             //총알 오브젝트는 비활성화 시키기
             other.gameObject.SetActive(false);
@@ -35,6 +35,26 @@ public class DestroyZone : MonoBehaviour
             PlayerFire pf = GameObject.Find("Player").GetComponent<PlayerFire>();
             pf.bulletPool.Enqueue(other.gameObject);
         }   
+        else
+        {
+            //Destroy(other.gameObject);
+        }
+
+
+
+        ////애너미의 총알이 충돌된 경우
+        if (other.gameObject.layer == LayerMask.NameToLayer("E_Bullet"))
+        {
+            //총알 오브젝트는 비활성화 시키기
+            other.gameObject.SetActive(false);
+            //오브젝트풀에 추가만 해준다
+            Enemy ef = GameObject.Find("Enemy1").GetComponent<Enemy>();
+            ef.EnemyBulletPool.Enqueue(other.gameObject);
+        }
+        else
+        {
+            //Destroy(other.gameObject);
+        }
     }
 
 }

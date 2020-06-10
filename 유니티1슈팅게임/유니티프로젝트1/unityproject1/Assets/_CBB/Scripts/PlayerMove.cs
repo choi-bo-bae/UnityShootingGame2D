@@ -9,6 +9,8 @@ public class PlayerMove : MonoBehaviour
     public float speed = 5.0f;//플레이어의 이동 속도
     public Vector2 margin;  //뷰 포트좌표는 0.0f ~ 1.0f 사이
 
+    public GameObject fxFactory;
+
     //조이스틱 사용하기
     public VariableJoystick joystick;//조이스틱
 
@@ -62,7 +64,7 @@ public class PlayerMove : MonoBehaviour
         //리지드 바디의 충돌체로 이동 못하게 막기
 
         //두 번째 : 플레이어의 포지션으로 이동 처리
-        //아래와 같이 transform.position의 값을 벡터3에 다마아서 계산 후 다시 대입시키는 과정을 캐스팅 이라고 한다.
+        //아래와 같이 transform.position의 값을 벡터3에 담아서 계산 후 다시 대입시키는 과정을 캐스팅 이라고 한다.
         //Vector3 position = transform.position;
         //position.x = Mathf.Clamp(position.x, -2.5f, 2.5f);
         //position.y = Mathf.Clamp(position.y, -3.5f, 5.5f);
@@ -76,5 +78,22 @@ public class PlayerMove : MonoBehaviour
         position.x = Mathf.Clamp(position.x, 0.0f + margin.x, 1.0f - margin.x);
         position.y = Mathf.Clamp(position.y, 0.0f + margin.y, 1.0f - margin.y);
         transform.position = Camera.main.ViewportToWorldPoint(position);
+    }
+
+
+
+    private void OnCollisionEnter(Collision collision)
+    {
+
+        Destroy(gameObject);
+
+        ShowEffect();
+    }
+
+    private void ShowEffect()
+    {
+        GameObject fx = Instantiate(fxFactory);
+        fx.transform.position = transform.position;
+        Destroy(fx, 1.0f);//1초 후에 없앰
     }
 }

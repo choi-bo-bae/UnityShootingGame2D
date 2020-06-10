@@ -11,18 +11,22 @@ public class EnemyManager : MonoBehaviour
     //에너미 스폰 위치
 
     public GameObject enemyFactory;     //에너미 공장 (에너미프리팹)
+
     //public GameObject spawnPoint;       //스폰 될 위치
     public GameObject[] spawnPoints;       //스폰 될 위치들
-    float spawnTime = 1.0f;                    //스폰 타임
+
+    float spawnTime = 0.5f;                    //스폰 타임
     float curTime = 0.0f;                      //누적 타임
 
     // Update is called once per frame
     void Update()
     {
-        //에너미 생성
+        //에너미 생성과 동시에 발사함
         SpawnEnemy();
+       
     }
 
+   
     private void SpawnEnemy()
     {
         //몇초에 한번씩 이벤트 발생
@@ -30,6 +34,7 @@ public class EnemyManager : MonoBehaviour
         //게임에서 정말 자주 사용함
 
         curTime += Time.deltaTime;
+
         if(curTime > spawnTime)
         {
             //누적시간 초기화
@@ -44,5 +49,6 @@ public class EnemyManager : MonoBehaviour
             //enemy.transform.position = transform.GetChild(index).position;
             enemy.transform.position = spawnPoints[index].transform.position;
         }
+        
     }
 }

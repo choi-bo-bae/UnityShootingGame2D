@@ -35,10 +35,10 @@ public class DestroyZone : MonoBehaviour
             PlayerFire pf = GameObject.Find("Player").GetComponent<PlayerFire>();
             pf.bulletPool.Enqueue(other.gameObject);
         }   
-        else
-        {
-            //Destroy(other.gameObject);
-        }
+       //else
+       //{
+       //    //Destroy(other.gameObject);
+       //}
 
 
 
@@ -51,10 +51,11 @@ public class DestroyZone : MonoBehaviour
             Enemy ef = GameObject.Find("Enemy1").GetComponent<Enemy>();
             ef.EnemyBulletPool.Enqueue(other.gameObject);
         }
-        else
-        {
-            //Destroy(other.gameObject);
-        }
+       //else
+       //{
+       //    //Destroy(other.gameObject);
+       //}
+
     }
 
 }

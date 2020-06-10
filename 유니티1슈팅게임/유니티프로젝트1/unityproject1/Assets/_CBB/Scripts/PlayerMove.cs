@@ -71,9 +71,9 @@ public class PlayerMove : MonoBehaviour
         //transform.position = position;
 
 
-        //세 번째 : 메인카레라의 뷰포트를 가져와서 처리한다(이거 사용할거임)
-        //스크린 좌표 : 왼쪽 하단 (0, 0), 우측 상단(maxX, maxY)
-        //뷰포트 좌표 : 왼쪽 하단(0, 0), 우측 상단 (1.0f, 1.0f)
+        //세 번째 : 메인카메라의 뷰포트를 가져와서 처리한다(이거 사용할거임)
+        //스크린 좌표 : 왼쪽 하단 (0, 0), 우측 상단 (maxX, maxY)
+        //뷰포트 좌표 : 왼쪽 하단 (0, 0), 우측 상단 (1.0f, 1.0f)
         Vector3 position = Camera.main.WorldToViewportPoint(transform.position);
         position.x = Mathf.Clamp(position.x, 0.0f + margin.x, 1.0f - margin.x);
         position.y = Mathf.Clamp(position.y, 0.0f + margin.y, 1.0f - margin.y);
@@ -85,15 +85,30 @@ public class PlayerMove : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
 
-        Destroy(gameObject);
+        Destroy(gameObject);//플레이어 없앰
 
-        ShowEffect();
+        if(collision.gameObject.layer != LayerMask.NameToLayer("E_Bullet"))
+        {
+
+            Destroy(collision.gameObject);
+
+            GameObject fx = Instantiate(fxFactory);
+            fx.transform.position = collision.transform.position;
+
+            Destroy(fx, 1.0f);//1초 후에 없앰
+
+
+        }//부딫힌 물체 펑
+
+
+        ShowEffect();//플레이어 펑
     }
 
     private void ShowEffect()
     {
         GameObject fx = Instantiate(fxFactory);
         fx.transform.position = transform.position;
+
         Destroy(fx, 1.0f);//1초 후에 없앰
     }
 }

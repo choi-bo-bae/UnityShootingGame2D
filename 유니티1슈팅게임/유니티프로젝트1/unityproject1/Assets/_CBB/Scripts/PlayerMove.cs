@@ -6,10 +6,10 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     //플레이어 이동
-    public float speed = 5.0f;//플레이어의 이동 속도
+    private float speed = 5.0f;//플레이어의 이동 속도
     public Vector2 margin;  //뷰 포트좌표는 0.0f ~ 1.0f 사이
 
-    public GameObject fxFactory;
+   
 
     //조이스틱 사용하기
     public VariableJoystick joystick;//조이스틱
@@ -82,33 +82,5 @@ public class PlayerMove : MonoBehaviour
 
 
 
-    private void OnCollisionEnter(Collision collision)
-    {
-
-        Destroy(gameObject);//플레이어 없앰
-
-        if(collision.gameObject.layer != LayerMask.NameToLayer("E_Bullet"))
-        {
-
-            Destroy(collision.gameObject);
-
-            GameObject fx = Instantiate(fxFactory);
-            fx.transform.position = collision.transform.position;
-
-            Destroy(fx, 1.0f);//1초 후에 없앰
-
-
-        }//부딫힌 물체 펑
-
-
-        ShowEffect();//플레이어 펑
-    }
-
-    private void ShowEffect()
-    {
-        GameObject fx = Instantiate(fxFactory);
-        fx.transform.position = transform.position;
-
-        Destroy(fx, 1.0f);//1초 후에 없앰
-    }
+   
 }

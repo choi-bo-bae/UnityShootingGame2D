@@ -25,13 +25,13 @@ public class BossFire : MonoBehaviour
     public GameObject bossFirePos;
 
 
-    public float fireTime = 1.0f;
-    float curTime = 0.0f;
+    public float fireTime = 1.0f;       //곧은 총알
+    private float curTime = 0.0f;
 
-    public float fireTime1 = 1.5f;      //1.5초에 한번씩 발사
-    float curTime1 = 0.0f;
+    public float fireTime1 = 1.5f;      //1.5초에 한번씩 발사 --> 회전 총알
+    private float curTime1 = 0.0f;
 
-    int bulletMax = 10;
+    private int bulletMax = 10;
 
     public Queue<GameObject> BossBulletPool;
 
@@ -39,7 +39,11 @@ public class BossFire : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InitObjectPooling();
+
+        if (target != null)
+        {
+            InitObjectPooling();
+        }
     }
 
     private void InitObjectPooling()
@@ -65,9 +69,11 @@ public class BossFire : MonoBehaviour
 
         //   curTime = 0.0f;
         //}
-
-        AutoFire1();
-        AutoFire2();
+        if (target != null)
+        {
+            AutoFire1();
+            AutoFire2();
+        }
     }
 
   
@@ -75,8 +81,7 @@ public class BossFire : MonoBehaviour
     private void AutoFire1()
     {
         //타겟이 없을 때 에러 발생하니 예외처리
-        if (target != null)
-        {
+       
             curTime += Time.deltaTime;
 
             if (curTime > fireTime)
@@ -110,15 +115,14 @@ public class BossFire : MonoBehaviour
                    // bullet.transform.position = bossFirePos.transform.position;
                    
             }
-        }
+       
     }
 
     //회전 총알 발사
     private void AutoFire2()
     {
         //타겟이 없을 때 에러 발생하니 예외처리
-        if (target != null)
-        {
+       
             curTime1 += Time.deltaTime;
 
             if (curTime1 > fireTime1)
@@ -141,5 +145,5 @@ public class BossFire : MonoBehaviour
 
             }
         }
-    }
+    
 }

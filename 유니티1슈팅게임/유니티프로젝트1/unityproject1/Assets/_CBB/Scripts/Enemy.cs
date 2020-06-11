@@ -14,15 +14,18 @@ public class Enemy : MonoBehaviour
     private float maxTime = 2.0f;
 
     public GameObject bulletFactory;
-    public GameObject target;
+    public GameObject target;//플레이어
 
     public Queue<GameObject> EnemyBulletPool;
 
-    int bulletMax = 5;
+    private int bulletMax = 2;
 
     private void Start()
     {
-        InitBulletPooling();
+        if (target != null)
+        {
+            InitBulletPooling();
+        }
     }
 
     private void InitBulletPooling()
@@ -41,48 +44,46 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //아래로 이동해라
-        transform.Translate(Vector3.down * speed * Time.deltaTime);
-
-        enemyFire();
-    }
-
-    private void enemyFire()
-    {
         if (target != null)
         {
-            curTime += Time.deltaTime;
+            //아래로 이동해라
+            transform.Translate(Vector3.down * speed * Time.deltaTime);
 
-            if (curTime > maxTime)
-            {
-                if (EnemyBulletPool.Count > 0)
-                {
-                    GameObject enemyBullet = EnemyBulletPool.Dequeue();
-                    enemyBullet.SetActive(true);
-                    enemyBullet.transform.position = this.transform.position;
-                    Vector3 dir = target.transform.position - this.transform.position;
-                    dir.Normalize();
-                    enemyBullet.transform.up = dir;
-
-                    curTime = 0.0f;
-                }
-                else
-                {
-                    GameObject enemyBullet = Instantiate(bulletFactory);
-                    enemyBullet.SetActive(false);
-                    EnemyBulletPool.Enqueue(enemyBullet);
-
-                    curTime = 0.0f;
-                }
-            }
+            enemyFire();
         }
     }
 
-   
+
+    private void enemyFire()
+    {
+         
+        curTime += Time.deltaTime;
+
+        if (curTime > maxTime)
+        {
+            if (EnemyBulletPool.Count > 0)
+            {
+                GameObject enemyBullet = EnemyBulletPool.Dequeue();
+                enemyBullet.SetActive(true);
+                enemyBullet.transform.position = this.transform.position;
+                Vector3 dir = target.transform.position - this.transform.position;
+                dir.Normalize();
+                enemyBullet.transform.up = dir;
+
+                curTime = 0.0f;
+            }
+            else
+            {
+                GameObject enemyBullet = Instantiate(bulletFactory);
+                enemyBullet.SetActive(false);
+                EnemyBulletPool.Enqueue(enemyBullet);
+
+                curTime = 0.0f;
+            }
+        }  
+
+    }
 
 
-
-
-  
 
 }

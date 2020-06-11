@@ -11,6 +11,10 @@ public class PlayerFire : MonoBehaviour
 
     public RaycastHit collObj;
 
+    public GameObject fxFactory;
+
+  
+
     //레이저를 발사하기 위해 라인랜더러가 필요
     //선은 최소 2개 이상의 점 필요
     public LineRenderer lr;//라인랜더러 컴포넌트
@@ -24,8 +28,9 @@ public class PlayerFire : MonoBehaviour
 
     //오브젝트 풀링에 사용할 최대 총알 갯수
     //오브젝트 풀링
-    int poolSize = 20;
-    int fireIndex = 0;
+    int poolSize = 10;
+   // int fireIndex = 0;
+
     //1. 배열
     // GameObject[] bulletPool;
 
@@ -200,20 +205,18 @@ public class PlayerFire : MonoBehaviour
             {
                 //레이저의 끝점 지정
                 lr.SetPosition(1, hitInfo.point);
-
-                //충돌된 오브젝트 삭제
-                //Contains("Enemy") =>Enemy(clone)이런것도 포함
-                //if (hitInfo.collider.name.Contains("Enemy"))
-                //{
-                //    Destroy(hitInfo.collider.gameObject);
-                //}
+                GameObject fx = Instantiate(fxFactory);
+                fx.transform.position = hitInfo.transform.position;
+                Destroy(fx, 1.0f);//1초 후에 없앰
+                              
 
                 //디스트로이존의 탑과는 충돌처리 되지 않도록 한다.
-                if (hitInfo.collider.name != "Top")
+                 if (hitInfo.collider.name != "Top")
                 {
                     Destroy(hitInfo.collider.gameObject);
                 }
-            
+
+                
             }
             else
             {
@@ -260,6 +263,7 @@ public class PlayerFire : MonoBehaviour
         ////SceneMgr.Instance.LoadScene("StartScene");
         
     }
-    
 
+
+ 
 }

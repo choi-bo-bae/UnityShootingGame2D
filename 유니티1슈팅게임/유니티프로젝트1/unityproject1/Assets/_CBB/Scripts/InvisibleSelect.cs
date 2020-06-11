@@ -45,6 +45,7 @@ public class InvisibleSelect : MonoBehaviour
     {
         if (state == true)
         {
+
             count++;
             autoBullet.transform.position = this.transform.position;
 
@@ -56,6 +57,22 @@ public class InvisibleSelect : MonoBehaviour
                 count = 0;
             }
         }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.layer == LayerMask.NameToLayer("E_Bullet"))
+        {
+            Destroy(gameObject);
+
+
+            collision.gameObject.SetActive(false);
+
+            Enemy ef = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Enemy>();
+            ef.EnemyBulletPool.Enqueue(collision.gameObject);
+        }
+
+        
     }
 
 

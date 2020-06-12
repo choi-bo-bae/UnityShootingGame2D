@@ -8,10 +8,16 @@ public class EnemyDie : MonoBehaviour
 
     public GameObject fxFactory;
 
-    private float hp = 100.0f;
-
     private float damage = 2.0f;
+    public float Damage
+    {
+        get { return damage; }
+    }
 
+    private float hp = 100.0f;
+    public float bossHp { get { return bossHp; }}
+
+ 
     private float inithp = 100.0f;
 
     public Image hpBarImg;

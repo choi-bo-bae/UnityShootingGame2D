@@ -40,6 +40,8 @@ public class PlayerFire : MonoBehaviour
     //3. 큐
     public Queue<GameObject> bulletPool;
 
+   
+
 
     // Start is called before the first frame update
     void Start()
@@ -212,10 +214,16 @@ public class PlayerFire : MonoBehaviour
 
                 //디스트로이존의 탑과는 충돌처리 되지 않도록 한다.
                  if (hitInfo.collider.name != "Top")
-                {
-                    Destroy(hitInfo.collider.gameObject);
-                }
+                 {
+                     Destroy(hitInfo.collider.gameObject);
+                 }
 
+
+                 if(hitInfo.collider.name == "Boss")
+                 {
+                      hitInfo.transform.gameObject.GetComponent<EnemyDie>().bossHp -=
+                     hitInfo.transform.gameObject.GetComponent<EnemyDie>().Damage;
+                 }
                 
             }
             else

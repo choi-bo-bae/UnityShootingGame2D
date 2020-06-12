@@ -13,6 +13,8 @@ public class BossFire : MonoBehaviour
     //private float maxTime = 1.0f;
     //private float curTime = 0.0f;
 
+        
+
 
 
     //보스 총알 발사 (총알 패턴)

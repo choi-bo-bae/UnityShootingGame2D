@@ -5,7 +5,7 @@ using UnityEngine;
 public class Background : MonoBehaviour
 {
 
-    public MeshRenderer back;
+    MeshRenderer back;
 
     public float speed = 0.0f;
 
@@ -31,6 +31,9 @@ public class Background : MonoBehaviour
             speed = 0.0f;
         }
         //백그라운드 스크롤
+
     }
+
+
 
 }

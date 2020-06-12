@@ -47,7 +47,7 @@ public class Enemy : MonoBehaviour
         if (target != null)
         {
             //아래로 이동해라
-            transform.Translate(Vector3.down * speed * Time.deltaTime);
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
 
             enemyFire();
         }

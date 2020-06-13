@@ -107,6 +107,8 @@ public class PlayerFire : MonoBehaviour
                 curTime = 0.0f;
             }
         }
+
+        
     }
     
 
@@ -200,39 +202,39 @@ public class PlayerFire : MonoBehaviour
             //Ray로 충돌처리
             Ray ray = new Ray(transform.position, Vector3.up);
             RaycastHit hitInfo;  //Ray와 충돌된 오브젝트의 정보를 담는다.
-            
-            
-            //Ray와 충돌된 오브젝트가 있다
-            if (Physics.Raycast(ray, out hitInfo))
-            {
-                //레이저의 끝점 지정
-                lr.SetPosition(1, hitInfo.point);
-                GameObject fx = Instantiate(fxFactory);
-                fx.transform.position = hitInfo.transform.position;
-                Destroy(fx, 1.0f);//1초 후에 없앰
-                              
+      
 
-                //디스트로이존의 탑과는 충돌처리 되지 않도록 한다.
-                 if (hitInfo.collider.name != "Top")
-                 {
-                     Destroy(hitInfo.collider.gameObject);
-                 }
+           //Ray와 충돌된 오브젝트가 있다
+           if (Physics.Raycast(ray, out hitInfo))
+           {
+               //레이저의 끝점 지정
+               lr.SetPosition(1, hitInfo.point);
+               GameObject fx = Instantiate(fxFactory);
+               fx.transform.position = hitInfo.transform.position;
+               Destroy(fx, 1.0f);//1초 후에 없앰
+                             
 
-
-                 if(hitInfo.collider.name == "Boss")
-                 {
-                      hitInfo.transform.gameObject.GetComponent<EnemyDie>().bossHp -=
-                     hitInfo.transform.gameObject.GetComponent<EnemyDie>().Damage;
-                 }
+               //디스트로이존의 탑과는 충돌처리 되지 않도록 한다.
+                if (hitInfo.collider.name != "Top")
+                {
+                    Destroy(hitInfo.collider.gameObject);
+                }
                 
+                if (hitInfo.collider.name == "Boss")
+                {
+                    hitInfo.transform.gameObject.GetComponent<EnemyDie>().bossHp -= 2.0f;
+                }
+                    
             }
             else
             {
                 //충돌된 오브젝트가 없으니 끝점을 정해준다.
                 lr.SetPosition(1, transform.position + Vector3.up * 10);
             }
-            
+
         //}
+      
+
     }
 
     //private void OnTriggerEnter(Collider other)

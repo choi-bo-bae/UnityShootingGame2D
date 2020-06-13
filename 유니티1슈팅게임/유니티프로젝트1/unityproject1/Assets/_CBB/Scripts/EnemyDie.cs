@@ -9,13 +9,14 @@ public class EnemyDie : MonoBehaviour
     public GameObject fxFactory;
 
     private float damage = 2.0f;
-    public float Damage
-    {
-        get { return damage; }
-    }
-
+   
     private float hp = 100.0f;
-    public float bossHp { get { return bossHp; }}
+    public float bossHp
+    {
+        set { hp = bossHp; }
+        get { return hp; }
+    }
+   
 
  
     private float inithp = 100.0f;
@@ -93,6 +94,11 @@ public class EnemyDie : MonoBehaviour
         GameObject fx = Instantiate(fxFactory);
         fx.transform.position = transform.position;
         Destroy(fx, 1.0f);//1초 후에 없앰
+    }
+
+    private void Update()
+    {
+        print(hp);
     }
 
 }
